@@ -44,23 +44,29 @@ function TodoList() {
   return (
     <>
       <h1 className="text-center text-red-950 text-6xl font-thin">todos</h1>
-      <div className="flex flex-col justify-center items-center my-12 ">
-        <form onSubmit={handleSubmit}>
-          <div className="items-center">
+      <div className="flex flex-col mt-12 mx-2 lg:mx-auto py-8  bg-red-200 rounded-lg max-w-4xl">
+        <form className="w-full" onSubmit={handleSubmit}>
+          <div className="flex flex-row ">
             <input
-              className=""
+              className="w-full mx-2 placeholder:text-red-400 focus:outline-red-200 outline-none bg-transparent border border-white p-1 rounded-lg "
               placeholder="What needs to be done?"
               type="text"
               value={todo}
               onChange={(event) => setTodo(event.target.value)}
             />
-            <button type="submit">+</button>
+            <button
+              onClick={() => setFilter("all")}
+              className="mr-2 px-3 py-0 bg-red-400  text-white rounded-lg text-xs font-bold "
+              type="submit"
+            >
+              add
+            </button>
           </div>
         </form>
 
-        <ul>
+        <ul className="mt-4">
           {filteredTodos.map((todo) => (
-            <li key={todo.id}>
+            <li className="flex justify-between gap-2 mx-2 my-2 " key={todo.id}>
               <span
                 style={{
                   textDecoration: todo.completed ? "line-through" : "none",
@@ -68,19 +74,49 @@ function TodoList() {
               >
                 {todo.title}
               </span>
-              <button onClick={() => handleComplete(todo.id)}>
+              <button
+                className="ml-auto text-white px-3 py-1 rounded-lg text-xs bg-red-400"
+                onClick={() => handleComplete(todo.id)}
+              >
                 {todo.completed ? "Incomplete" : "Complete"}
               </button>
-              <button onClick={() => handleDelete(todo.id)}>Delete</button>
+              <button
+                className="mr-0 px-3 py-1 rounded-lg text-xs text-white bg-red-400"
+                onClick={() => handleDelete(todo.id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>
-        <div>
-          <button onClick={() => setFilter("all")}>All</button>
-          <button onClick={() => setFilter("active")}>Active</button>
-          <button onClick={() => setFilter("completed")}>Completed</button>
+        <div className="mx-2 flex flex-row justify-between mt-14">
+          <div className="flex flex-row gap-3">
+            <button
+              className="bg-red-400 px-3 py-1 rounded-lg text-xs text-white"
+              onClick={() => setFilter("all")}
+            >
+              All
+            </button>
+            <button
+              className="bg-red-400 px-3 py-1 rounded-lg text-xs text-white"
+              onClick={() => setFilter("active")}
+            >
+              Active
+            </button>
+            <button
+              className="bg-red-400 px-3 py-1 rounded-lg text-xs text-white"
+              onClick={() => setFilter("completed")}
+            >
+              Completed
+            </button>
+          </div>
+          <button
+            className="bg-red-400 px-3 py-1 rounded-lg text-xs text-white"
+            onClick={handleClearCompleted}
+          >
+            Clear Completed
+          </button>
         </div>
-        <button onClick={handleClearCompleted}>Clear Completed</button>
       </div>
     </>
   );
